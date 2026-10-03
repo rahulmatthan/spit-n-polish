@@ -20,8 +20,7 @@ editor at the same time.
 ## Where it comes from
 
 Spit n Polish was inspired by Jason Fried's Write_On and by the design choices in
-Essay.app. I didn't copy either one. I took the features I found most useful for
-polishing my own writing and built them into a tool that fits the way I work.
+Essay.app. From those, I selected the features that were most useful to me.
 
 ## What you need
 
