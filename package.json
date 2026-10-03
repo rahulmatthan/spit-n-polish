@@ -1,0 +1,23 @@
+{
+  "name": "spit-n-polish",
+  "version": "1.0.0",
+  "description": "Spit n Polish — a drafting editor that never rewrites you",
+  "scripts": {
+    "build": "esbuild src/main.js --bundle --format=iife --minify --sourcemap --outfile=web/dist/bundle.js",
+    "watch": "esbuild src/main.js --bundle --format=iife --sourcemap --outfile=web/dist/bundle.js --watch",
+    "test": "node --test test/"
+  },
+  "type": "module",
+  "dependencies": {
+    "@codemirror/commands": "^6.11.1",
+    "@codemirror/lang-markdown": "^6.5.2",
+    "@codemirror/language": "^6.12.4",
+    "@codemirror/state": "^6.7.6",
+    "@codemirror/view": "^6.43.13",
+    "@lezer/highlight": "^1.2.5"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.2"
+  },
+  "private": true
+}

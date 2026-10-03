@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Spit n Polish Guide</title>
+<style>
+:root {
+  --bg: #fbfaf7; --ink: #23221f; --soft: #8a867d; --faint: #d9d5cc; --panel: #f3f1ec;
+  --accent: #5b5bd6; --accent-soft: rgba(91, 91, 214, 0.12); --ai: #b7791f;
+  --font: "Iowan Old Style", "Palatino", "P052", Georgia, serif;
+  --ui: -apple-system, BlinkMacSystemFont, "Helvetica Neue", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #12141c; --ink: #e4e2dc; --soft: #7d8090; --faint: #2c3040; --panel: #181b25;
+    --accent: #9d9dff; --accent-soft: rgba(157, 157, 255, 0.14); --ai: #e0a54a;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #12141c; --ink: #e4e2dc; --soft: #7d8090; --faint: #2c3040; --panel: #181b25;
+  --accent: #9d9dff; --accent-soft: rgba(157, 157, 255, 0.14); --ai: #e0a54a;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 14px/1.55 var(--ui); }
+.wrap { max-width: 64rem; margin: 0 auto; padding: 2.5rem 1.5rem 6rem; display: grid; grid-template-columns: 12rem minmax(0, 1fr); gap: 3rem; }
+nav { position: sticky; top: 1.5rem; align-self: start; font-size: 12.5px; }
+nav a { display: block; color: var(--soft); text-decoration: none; padding: .18rem 0; }
+nav a:hover { color: var(--accent); }
+h1 { font: 400 30px/1.2 var(--font); margin: 0 0 .3rem; }
+.lede { color: var(--soft); margin: 0 0 1.4rem; max-width: 40rem; }
+#q { width: 100%; font: inherit; padding: .55rem .75rem; border: 1px solid var(--faint); border-radius: 6px; background: var(--panel); color: var(--ink); margin-bottom: 1.5rem; }
+#q:focus { outline: none; border-color: var(--accent); }
+section { margin: 0 0 2.4rem; }
+h2 { font: 400 20px/1.3 var(--font); margin: 0 0 .7rem; padding-bottom: .35rem; border-bottom: 1px solid var(--faint); }
+.f { display: grid; grid-template-columns: 13rem minmax(0, 1fr); gap: 1rem; padding: .5rem 0; border-bottom: 1px solid color-mix(in srgb, var(--faint) 50%, transparent); }
+.f > b { font-weight: 600; }
+.f p { margin: 0; }
+.f p + p { margin-top: -.6rem; grid-column: 2; }
+.k { font-family: var(--ui); font-size: 12px; white-space: nowrap; background: var(--panel); border: 1px solid var(--faint); border-radius: 4px; padding: 0 .35rem; }
+.ai { color: var(--ai); }
+.note { color: var(--soft); font-size: 12.5px; }
+code { font-size: 12.5px; background: var(--panel); padding: 0 .25rem; border-radius: 3px; }
+table { border-collapse: collapse; width: 100%; }
+td, th { text-align: left; padding: .35rem .6rem .35rem 0; border-bottom: 1px solid color-mix(in srgb, var(--faint) 50%, transparent); vertical-align: top; }
+th { font-weight: 600; color: var(--soft); font-size: 12px; }
+.hidden { display: none !important; }
+#none { color: var(--soft); }
+@media (max-width: 760px) {
+  .wrap { grid-template-columns: 1fr; gap: 1rem; padding: 1.5rem 16px 4rem; }
+  nav { position: static; display: flex; flex-wrap: wrap; gap: .2rem .9rem; }
+  .f { grid-template-columns: 1fr; gap: .2rem; }
+  .f p + p { grid-column: 1; margin-top: 0; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav>
+  <a href="#start">Getting in</a>
+  <a href="#screen">The screen</a>
+  <a href="#versions">Versions</a>
+  <a href="#history">Earlier wordings</a>
+  <a href="#ghost">Ghosting</a>
+  <a href="#overflow">Overflow</a>
+  <a href="#move">Moving &amp; splitting</a>
+  <a href="#structure">Structure view</a>
+  <a href="#lab">The Lab</a>
+  <a href="#saving">Saving &amp; your documents</a>
+  <a href="#menu">Right-click menu</a>
+  <a href="#keys">Every key</a>
+  <a href="#behind">Behind the scenes</a>
+</nav>
+
+<main>
+<h1>Spit n Polish — everything it does</h1>
+<p class="lede">For the spit and polish on a piece you've written — without anyone rewriting it. Your documents are plain markdown files in a folder on your computer. Nothing an AI writes enters the draft without a click from you.</p>
+<input id="q" type="search" placeholder="Filter — e.g. ghost, trim, ⌥, history…" autofocus>
+<p id="none" class="hidden">Nothing matches.</p>
+
+<section id="start">
+<h2>Getting in</h2>
+<div class="f"><b>Opening it</b><p>Spit n Polish runs quietly in the background on your own computer (if you installed it as a service) and lives at <code>http://127.0.0.1:4848/</code> — bookmark it, or give it a keyboard shortcut. Nothing is online; there is no account.</p></div>
+<div class="f"><b>Reopens where you were</b><p>It opens the document you last had open.</p></div>
+<div class="f"><b>Documents</b><p><span class="k">⌘O</span> or click the name at the top. Lists your documents, newest first; type to filter, ↑↓ and ⏎ to pick. Type a name that doesn't exist and press ⏎ to create it, or click <b>+ New</b>.</p></div>
+<div class="f"><b>Import</b><p><b>Import…</b> in the document list, or drop <code>.md</code> files anywhere on the page. Pick <code>X.alts.json</code> or <code>X.overflow.md</code> alongside <code>X.md</code> and they come with it.</p></div>
+<div class="f"><b>Rename · Download · Delete</b><p>At the foot of the document list, for the open document. <b>Download</b> gives the <code>.md</code> with ghosted text kept as <code>%%…%%</code>; <b>Download clean</b> leaves it out.</p></div>
+<div class="f"><b>Settings</b><p>⚙ at the top right: how the AI is reached, the model for the deeper passes, notes on your voice, and where your documents are.</p></div>
+<div class="f"><b>This guide</b><p><span class="k">⌘/</span> or the <b>?</b> at the bottom right.</p></div>
+</section>
+
+<section id="screen">
+<h2>The screen</h2>
+<div class="f"><b>Word &amp; character count</b><p>Top left. Characters include spaces and punctuation, as Word counts them; line breaks don't count. Ghosted text is left out of both.</p></div>
+<div class="f"><b>Polishing marks on / off</b><p>Click the count. Off hides every underline, ghost mark, Lab mark and panel button — a plain editor. Remembered next time.</p></div>
+<div class="f"><b>Status</b><p>Top right: <i>editing</i>, <i>saving…</i>, <i>saved</i>, <i>conflict</i>, or why a command couldn't act (e.g. "Can't: already the first sentence").</p></div>
+<div class="f"><b>Bottom bar</b><p>Versions (left) · Structure and Lab (middle) · Overflow and ? (right).</p></div>
+</section>
+
+<section id="versions">
+<h2>Versions (alternatives)</h2>
+<div class="f"><b>Make versions</b><p>Select a word, sentence or paragraph and press <span class="k">⌘;</span> (or right-click → Versions…). With nothing selected it takes the word at the cursor. The Versions panel opens with a box to write another version.</p></div>
+<div class="f"><b>The add box</b><p>Starts with the current wording, cursor at the end, so you can amend rather than retype. <span class="k">⏎</span> adds it and makes it the one in the draft; <span class="k">⇧⏎</span> new line; <span class="k">Esc</span> back to the draft. A half-typed version survives if you click away.</p></div>
+<div class="f"><b>Cycle in place</b><p>Hover over it and press <span class="k">↑</span> <span class="k">↓</span>, or with the cursor in it <span class="k">⌥↑</span> <span class="k">⌥↓</span>, or click a version in the panel.</p></div>
+<div class="f"><b>How they look</b><p>Word: wavy underline. Sentence: dotted underline. Paragraph: a rule in the left margin. The underline turns your accent colour when the version showing isn't your original. Hovered or current: lightly highlighted.</p></div>
+<div class="f"><b>Level</b><p>Guessed from the selection; change it with Word / Sentence / Paragraph at the top of the panel.</p></div>
+<div class="f"><b>a / an</b><p>Swapping a word fixes the article before it ("a paperclip" → "an eraser").</p></div>
+<div class="f"><b>Edit a version</b><p>Just type in the draft — you're editing whichever version is showing.</p></div>
+<div class="f"><b>Remove</b><p>× beside a version in the panel. Removing the last one removes the set.</p></div>
+<div class="f"><b class="ai">◆ AI versions</b><p>In the panel, or right-click → AI versions. Added beside yours, marked ◆, never replacing your text. Words: 6 options from Sonnet (a few seconds). Sentences: 3, paragraphs: 2, from the model chosen in Settings, following your voice notes. Never repeats one you already have. "clear AI versions" removes the ones not in use.</p></div>
+<div class="f"><b>Panel</b><p><span class="k">⌥⌘V</span> or Versions at the bottom. With the cursor outside any versions it lists the keys.</p></div>
+<div class="f"><b>Found by their text</b><p>Versions are anchored by their text and its surroundings, not by position, so editing the file in another editor (Obsidian, say) doesn't break them. If a versioned passage is rewritten beyond recognition, its set is kept untouched.</p></div>
+</section>
+
+<section id="history">
+<h2>Earlier wordings (sentence history)</h2>
+<div class="f"><b>Automatic</b><p>When you reword a sentence by typing and move off it, the old wording is kept — if at least two words changed. Typo fixes, cycling versions, Lab edits, moves and undo don't count.</p></div>
+<div class="f"><b>Where to find them</b><p>Cursor in the sentence, Versions panel open: "Earlier wordings", newest first. Hover for the date. Nothing shows in the draft.</p></div>
+<div class="f"><b>use · ×</b><p><b>use</b> brings a wording back as a version (your current one stays as a version too, so you can cycle between them). <b>×</b> forgets it.</p></div>
+<div class="f"><b>Kept</b><p>The last 20 per sentence, saved with the document, so they last between sessions.</p></div>
+</section>
+
+<section id="ghost">
+<h2>Ghosting</h2>
+<div class="f"><b>Ghost / revive</b><p><span class="k">⌘'</span> ghosts the selection — it stays visible, faded, but is no longer part of the piece. <span class="k">⌘'</span> in a ghost revives it. Also on the right-click menu.</p></div>
+<div class="f"><b>In the file</b><p>Ghosted text is wrapped in <code>%%…%%</code> — an Obsidian comment, hidden in Obsidian's reading view if you take the file there.</p></div>
+<div class="f"><b>Left out of</b><p>Word and character counts, every AI call and Lab pass, and <b>Download clean</b>.</p></div>
+</section>
+
+<section id="overflow">
+<h2>Overflow</h2>
+<div class="f"><b>Panel</b><p><span class="k">⌘.</span> or Overflow at the bottom. A free notepad for offcuts, lines you like, notes. Saved with the document.</p></div>
+<div class="f"><b>Stash</b><p><span class="k">⌘⇧.</span> (or right-click → Stash in overflow) cuts the selection from the draft and adds it to the end of the overflow.</p></div>
+</section>
+
+<section id="move">
+<h2>Moving &amp; splitting</h2>
+<div class="f"><b>Move a sentence</b><p><span class="k">⌥⇧↑</span> <span class="k">⌥⇧↓</span> swaps the sentence at the cursor with its neighbour, within its paragraph; the cursor rides along. Press repeatedly to take the last sentence to the top.</p></div>
+<div class="f"><b>Move a paragraph</b><p><span class="k">⌃⌥↑</span> <span class="k">⌃⌥↓</span> swaps the paragraph with the one above or below. Headings and lists count as paragraphs; front matter never moves; a ghost spanning paragraphs moves as one.</p></div>
+<div class="f"><b>Split a sentence</b><p><span class="k">⌥⏎</span> ends the sentence at the cursor: drops a comma, semicolon or dash there, adds a full stop and capitalises the next word. Mid-word, it splits before the word.</p></div>
+<div class="f"><b>What travels</b><p>Versions, earlier wordings and Lab marks inside a moved sentence or paragraph go with it. A move that would cut a version in two is refused.</p></div>
+<div class="f"><b>Sentence ends</b><p>"Dr.", "e.g.", "a.m.", initials and similar don't end a sentence; a ghosted sentence counts as one.</p></div>
+</section>
+
+<section id="structure">
+<h2>Structure view</h2>
+<div class="f"><b>Open</b><p><span class="k">⌥⌘O</span> or Structure at the bottom. <span class="k">Esc</span> or <span class="k">⌥⌘O</span> to go back.</p></div>
+<div class="f"><b>Cards</b><p>One per paragraph: the first sentence in full, the rest faded, with its number and word count. Headings in bold; ghosted paragraphs struck through.</p></div>
+<div class="f"><b>Reorder</b><p>Drag a card. The draft changes and saves; versions and history go with the paragraph.</p></div>
+<div class="f"><b>Jump</b><p>Click a card to go to that paragraph in the draft.</p></div>
+<div class="f"><b class="ai">◆ Reverse outline</b><p>One line per paragraph on what it <i>does</i> in the argument, with its role — opening, claim, context, evidence, example, counterpoint, turn, implication, close. ~20 s. Lines stay with their cards when you reorder; the view tells you how many paragraphs changed since, and "Redo the outline" refreshes it. Shown only here — never in the draft.</p></div>
+</section>
+
+<section id="lab">
+<h2>The Lab</h2>
+<div class="f"><b>Open</b><p>Lab at the bottom. Works on the selection if you've selected 3+ words, otherwise the whole draft (the menu says which).</p></div>
+<div class="f"><b class="ai">Fix punctuation and typos</b><p>Each fix shown struck through with the correction beside it. Accept · Skip · Accept all. Sonnet.</p></div>
+<div class="f"><b class="ai">Mark the weakest sentences</b><p>Up to 6, worst first, each with a one-line note (hover).</p></div>
+<div class="f"><b>Mark sentences that run long</b><p>Over 35 words. Instant, no AI, no key needed.</p></div>
+<div class="f"><b class="ai">Mark convoluted sentences</b><p>Hard to follow on first reading. Up to 6.</p></div>
+<div class="f"><b class="ai">Mark words that don't fit the tone</b><p>Jargon, needless formality, slang, anything off your voice notes. Up to 10.</p></div>
+<div class="f"><b class="ai">Mark hedges and filler</b><p>Up to 12.</p></div>
+<div class="f"><b class="ai">Voice check</b><p>Marks sentences that break the notes on your voice you wrote in Settings, naming the principle each one breaks. Up to 8.</p></div>
+<div class="f"><b>Stepping through marks</b><p>‹ › in the Lab bar; click a mark to make it current. Done clears them.</p></div>
+<div class="f"><b class="ai">Trims</b><p>Slight −10% · Tighten more −20% · Even sharper −35% · Cut in half −50%. Deletion only — proposed cuts fade in place with the projected word count. Click a faded passage to keep it. Then <b>Make the cuts</b>, <b>Ghost them</b> (reversible), or <b>Walk through</b> one at a time (Cut · Keep · Stop). "Original" clears the trim.</p></div>
+<div class="f"><b>While it thinks</b><p>Keep writing; results are found again in the text if it changed. Cancel stops it.</p></div>
+<div class="f"><b>Which model</b><p>Passes marked in amber use Claude. Typos and word versions use Sonnet; the rest use the model you choose in Settings (Opus by default).</p></div>
+<div class="f"><b>The rule</b><p>The model only ever returns quotes to mark, fixes to accept or cuts to accept; each is located in your text before it's shown, and any it can't find is dropped.</p></div>
+</section>
+
+<section id="saving">
+<h2>Saving &amp; your documents</h2>
+<div class="f"><b>Autosave</b><p>About a second after you stop typing. <span class="k">⌘S</span> saves at once. Closing the tab saves on the way out.</p></div>
+<div class="f"><b>Where they're kept</b><p>As plain markdown in your Spit n Polish folder (<code>~/Documents/Spit n Polish</code> unless you chose another — Settings shows it). Subfolders work too. Back it up or sync it like any folder.</p></div>
+<div class="f"><b>Files per document</b><p><code>X.md</code> the prose (current versions inline, ghosts as <code>%%…%%</code>) · <code>X.alts.json</code> versions and earlier wordings · <code>X.overflow.md</code> offcuts. The last two appear only when needed.</p></div>
+<div class="f"><b>Other editors at the same time</b><p>Open the same file in Obsidian or any editor: changes made there appear here within a few seconds (if you have no unsaved changes). If both changed, nothing is overwritten: a banner offers <b>Load that version</b> or <b>Keep mine and overwrite</b>.</p></div>
+<div class="f"><b>Safe writes</b><p>Each save replaces the file in one step, so a crash never leaves half a file. Deleted documents go to the folder's <code>.trash</code>, not oblivion.</p></div>
+</section>
+
+<section id="menu">
+<h2>Right-click menu</h2>
+<div class="f"><b>Items</b><p>Versions… · AI versions · Ghost it / Revive · Stash in overflow · Move sentence up / down · Split sentence here · Move paragraph up / down.</p></div>
+</section>
+
+<section id="keys">
+<h2>Every key</h2>
+<table>
+<tr><th>Key</th><th>Does</th></tr>
+<tr><td><span class="k">⌘O</span></td><td>Open, create or import a document</td></tr>
+<tr><td><span class="k">⌘S</span></td><td>Save now</td></tr>
+<tr><td><span class="k">⌘;</span></td><td>Versions for the selection / word</td></tr>
+<tr><td>hover + <span class="k">↑</span> <span class="k">↓</span></td><td>Cycle versions in place</td></tr>
+<tr><td><span class="k">⌥↑</span> <span class="k">⌥↓</span></td><td>Cycle the versions at the cursor</td></tr>
+<tr><td><span class="k">⌥⌘V</span></td><td>Versions panel</td></tr>
+<tr><td><span class="k">⌘'</span></td><td>Ghost / revive</td></tr>
+<tr><td><span class="k">⌘.</span></td><td>Overflow panel</td></tr>
+<tr><td><span class="k">⌘⇧.</span></td><td>Stash the selection in overflow</td></tr>
+<tr><td><span class="k">⌥⇧↑</span> <span class="k">⌥⇧↓</span></td><td>Move the sentence up / down</td></tr>
+<tr><td><span class="k">⌃⌥↑</span> <span class="k">⌃⌥↓</span></td><td>Move the paragraph up / down</td></tr>
+<tr><td><span class="k">⌥⏎</span></td><td>Split the sentence at the cursor</td></tr>
+<tr><td><span class="k">⌥⌘O</span></td><td>Structure view</td></tr>
+<tr><td><span class="k">⌘/</span></td><td>This guide</td></tr>
+<tr><td><span class="k">Esc</span></td><td>Close a menu, the structure view, or leave the add box</td></tr>
+<tr><td><span class="k">⌘Z</span> <span class="k">⇧⌘Z</span></td><td>Undo / redo (every move, cut and swap included)</td></tr>
+</table>
+</section>
+
+<section id="behind">
+<h2>Privacy &amp; the AI</h2>
+<div class="f"><b>Your writing</b><p>Stays on your computer. It is sent to Anthropic only when you run an AI feature, and then only the text that feature needs (the selection or the draft, with ghosted text removed).</p></div>
+<div class="f"><b>With Claude Code</b><p>If the <code>claude</code> command is installed and signed in, the AI runs on your Claude subscription — no API key, no separate bill, counted against your plan's usage.</p></div>
+<div class="f"><b>With an API key</b><p>Otherwise, put <code>ANTHROPIC_API_KEY=…</code> in <code>~/.config/spitnpolish/env</code>, <code>pip install anthropic</code>, and restart Spit n Polish. Billed to that key: a few cents a pass at most.</p></div>
+<div class="f"><b>After an update</b><p>Restart Spit n Polish, then reload the page (<span class="k">⌘R</span>).</p></div>
+</section>
+</main>
+</div>
+<script src="keys.js"></script>
+<script>
+const q = document.getElementById("q");
+const rows = [...document.querySelectorAll(".f, tr:not(:first-child)")];
+q.addEventListener("input", () => {
+  const terms = q.value.toLowerCase().split(/\s+/).filter(Boolean);
+  let any = false;
+  for (const r of rows) {
+    const hit = terms.every(t => r.textContent.toLowerCase().includes(t) ||
+      r.closest("section").querySelector("h2").textContent.toLowerCase().includes(t));
+    r.classList.toggle("hidden", !hit);
+    any ||= hit;
+  }
+  for (const s of document.querySelectorAll("section"))
+    s.classList.toggle("hidden", ![...s.querySelectorAll(".f, tr:not(:first-child)")].some(r => !r.classList.contains("hidden")));
+  document.getElementById("none").classList.toggle("hidden", any);
+});
+addEventListener("keydown", e => { if (e.key === "Escape" && q.value) { q.value = ""; q.dispatchEvent(new Event("input")); } });
+</script>
+</body>
+</html>

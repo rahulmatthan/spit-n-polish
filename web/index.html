@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Spit n Polish</title>
+<meta name="description" content="Spit n Polish — a drafting editor that never rewrites you: alternative versions, ghosting, an overflow panel and AI editing passes that mark but never write.">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%235b5bd6'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='16' text-anchor='middle' fill='white'%3ESP%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header id="top">
+    <button id="count" title="Click to turn the polishing marks on or off">— words</button>
+    <button id="title" title="Open, create or import a document (⌘O)">…</button>
+    <span id="status"></span>
+    <button id="open-settings" title="Settings — voice notes, model, where your documents are">⚙</button>
+  </header>
+
+  <div id="banner" hidden></div>
+
+  <aside id="versions" hidden aria-label="Versions"></aside>
+  <main id="editor"></main>
+  <section id="structure" hidden tabindex="-1" aria-label="Structure"></section>
+  <aside id="overflow" hidden aria-label="Overflow">
+    <div class="ov-head">Overflow</div>
+    <textarea id="overflow-text" spellcheck="true" placeholder="Offcuts, notes, words you like — anything you want nearby but not in the piece."></textarea>
+  </aside>
+
+  <footer id="bottom">
+    <button id="toggle-versions" title="Versions panel (⌥⌘V)">Versions</button>
+    <span class="mid">
+      <button id="toggle-structure" title="Structure — paragraph cards and a reverse outline (⌥⌘O)">Structure</button>
+      <button id="toggle-lab" title="The Lab — editing passes over the draft or the selection">Lab</button>
+    </span>
+    <span class="right">
+      <button id="toggle-overflow" title="Overflow panel (⌘.)">Overflow</button>
+      <button id="help" title="Everything Spit n Polish does (⌘/)">?</button>
+    </span>
+  </footer>
+
+  <div id="labbar" hidden></div>
+  <div id="labmenu" hidden></div>
+  <div id="menu" role="menu" hidden></div>
+
+  <div id="picker" hidden>
+    <div class="pk-box">
+      <input id="pick-q" placeholder="Find a document, or type a name and ⏎ to create one…" autocomplete="off" spellcheck="false">
+      <ul id="pick-list"></ul>
+      <div class="pk-actions">
+        <button id="pk-new">+ New</button>
+        <button id="pk-import" title="Import .md files (or drop them on the page)">Import…</button>
+        <span class="pk-this">This document:</span>
+        <button id="pk-rename">Rename</button>
+        <button id="pk-download" title="Download as .md — ghosted text kept as %%…%%">Download</button>
+        <button id="pk-clean" title="Download as .md without the ghosted text">Download clean</button>
+        <button id="pk-delete" class="danger">Delete</button>
+      </div>
+      <input type="file" id="pk-file" accept=".md,.markdown,.txt,.json" multiple hidden>
+    </div>
+  </div>
+
+  <div id="settings" hidden>
+    <div class="set-box" role="dialog" aria-label="Settings">
+      <h2>Settings</h2>
+      <label>AI</label>
+      <p class="set-note">Runs through <span id="set-engine"></span>.</p>
+      <p class="set-note">With <a href="https://claude.com/claude-code" target="_blank" rel="noopener">Claude Code</a> installed and signed in, the AI uses your Claude subscription — no API key. Otherwise put <code>ANTHROPIC_API_KEY=…</code> in <code>~/.config/spitnpolish/env</code>, <code>pip install anthropic</code>, and restart Spit n Polish. Without either, everything except the AI works.</p>
+      <label for="set-model">Model for sentences, paragraphs and the Lab</label>
+      <select id="set-model">
+        <option value="opus">Claude Opus — best</option>
+        <option value="sonnet">Claude Sonnet — faster, lighter on your usage</option>
+      </select>
+      <label for="set-voice">Notes on your voice</label>
+      <textarea id="set-voice" rows="6" placeholder="e.g. Short declarative sentences. British spelling. No rhetorical questions. Concrete examples before abstractions. Never “delve”."></textarea>
+      <p class="set-note">Followed when the AI writes sentence and paragraph versions and in the tone pass; the Lab's Voice check marks sentences that break them.</p>
+      <label>Your documents</label>
+      <p class="set-note">Plain markdown files in <code id="set-folder"></code> — open them in any editor, back them up or sync them like any other folder. Deleted documents go to its <code>.trash</code> folder.</p>
+      <div class="set-row">
+        <span class="grow"></span>
+        <button id="set-done" class="primary">Done</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="keys.js"></script>
+  <script src="dist/bundle.js"></script>
+</body>
+</html>

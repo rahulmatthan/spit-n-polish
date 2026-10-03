@@ -1,0 +1,5 @@
+node_modules/
+__pycache__/
+.DS_Store
+.claude/settings.local.json
+web/dist/bundle.js.map
