@@ -70,3 +70,7 @@ The editor is in `src/` (CodeMirror 6). `npm install && npm run build` rebuilds
 `web/dist/bundle.js`, which is committed so running needs no Node. `npm test` runs the
 editor-logic tests. The server (`server.py`) and AI prompts (`lab.py`) use only the
 Python standard library.
+
+## Licence
+
+MIT — see [LICENSE](LICENSE).
