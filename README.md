@@ -17,6 +17,12 @@ Nothing an AI writes enters your text without a click from you. Your documents a
 plain markdown files in a folder on your own computer — open them in Obsidian or any
 editor at the same time.
 
+## Where it comes from
+
+Spit n Polish was inspired by Jason Fried's Write_On and by the design choices in
+Essay.app. I didn't copy either one. I took the features I found most useful for
+polishing my own writing and built them into a tool that fits the way I work.
+
 ## What you need
 
 - **Python 3.9 or newer** (already on most Macs and Linux machines).
